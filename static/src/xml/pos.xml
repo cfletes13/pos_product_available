@@ -11,6 +11,13 @@
                 </span>
             </t>
         </t>
+        <t t-jquery=".product-name" t-operation="replace">
+            <t>
+                <span class="product-name" t-attf-id="article_product_#{product.id}">
+                    <strong><t t-esc="'[ ' + product.default_code + ' ] '"/></strong><t t-esc="product.display_name"/>
+                </span>
+            </t>
+        </t>
     </t>
     <t t-extend="Orderline">
         <t t-jquery=".info-list>t:first-child">
@@ -19,9 +26,17 @@
         <t t-jquery="t[t-esc='line.get_quantity_str()']" t-operation="after">
             <t t-if="widget.pos.config.show_qtys &amp;&amp; line.get_product().type == 'product'">
                 <t t-set='qty_available' t-value='line.get_product().qty_available'/>
+                <t t-set='default_code' t-value='line.get_product().default_code'/>
                 (of <span t-attf-class="qty-info #{qty_available lt line.quantity ? 'not-available':''}"><t t-esc="line.get_product().rounded_qty()"/></span>)
             </t>
         </t>
+        <t t-jquery=".product-name" t-operation="replace">
+            <t>
+                <span>
+                    <strong> <t t-esc="'[ ' + line.get_product().default_code + ' ] '"/> </strong> <t t-esc="line.get_product().display_name"/>
+                    <!--t t-esc="'[ ' + line.get_product().default_code + ' ] ' + line.get_product().display_name "/-->
+                </span>
+            </t>
+        </t>
     </t>
-
 </templates>
